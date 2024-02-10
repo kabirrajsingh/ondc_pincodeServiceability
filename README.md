@@ -24,16 +24,16 @@ The query can be one of the following -
 4. PRINT,COMPANY,company_name- Prints the pincodes serviceable in the company_name field. Ex- PRINT,COMPANY,DVUGWTNT
 
 So a while input may look like this-
-5
-PVTPPE,846912
-PVTPPE,846913
-PVTPPE,754013
-TJTCNCUBI,378258
-TJTCNCUBI,378259
-3
-REMOVE,TJTCNCUBI,378259
-PRINT,COMPANY,TJTCNCUBI
-PRINT,PIN,846913
+5<br/>
+PVTPPE,846912<br/>
+PVTPPE,846913<br/>
+PVTPPE,754013<br/>
+TJTCNCUBI,378258<br/>
+TJTCNCUBI,378259<br/>
+3<br/>
+REMOVE,TJTCNCUBI,378259<br/>
+PRINT,COMPANY,TJTCNCUBI<br/>
+PRINT,PIN,846913<br/>
 
 ### Benefits:
   * Decreases space requirement.
