@@ -1,5 +1,6 @@
 import itertools,functools,sys
 import utils
+import os
 
 class Node:
   COMPANY_NODE="company"
@@ -304,62 +305,72 @@ class DoubleTrie:
 
 if __name__=="__main__":
   company_pincode_list=[]
-  file_name="sample_input_noupdate.txt"
   if len(sys.argv)>1:
+    dirname,tail=os.path.split(sys.argv[1])
+    ans_file=os.path.join(dirname,"answer_"+tail)
     file_name=sys.argv[1]
-  print(file_name)
-  with open("answer_"+file_name) as ans_f:
-    with open(file_name,'r') as f:
-      lines=list(filter(lambda x:len(x)!=0,
-                        map(
-                          lambda x:x.strip('\r\n').strip('\n'),
-                          f.readlines()
-                            )
-                        )
-                )
-    init_num=int(lines[0])
-    init_company_pincode_list=list(map(lambda x:tuple(x.split(',')),lines[1:init_num+1]))
+    print(f"""
+file_name:{file_name}
+ans_file:{ans_file}
+          """)
+  else:
+    print("please provide the right filepath for the testcase file")
+    print("make sure to provide a file which has a corressponding answer_ file [see testcases folder for more details]")
+    exit(0)
+  try:
+    with open(ans_file) as ans_f:
+      with open(file_name,'r') as f:
+        lines=list(filter(lambda x:len(x)!=0,
+                          map(
+                            lambda x:x.strip('\r\n').strip('\n'),
+                            f.readlines()
+                              )
+                          )
+                  )
+      init_num=int(lines[0])
+      init_company_pincode_list=list(map(lambda x:tuple(x.split(',')),lines[1:init_num+1]))
+          
+      drie=DoubleTrie(init_company_pincode_list)
+
+      query_ans_list=list(filter(lambda x:len(x)!=0,
+                          map(
+                            lambda x:x.strip('\r\n').strip('\n'),
+                            ans_f.readlines()
+                              )
+                          )
+                  )
+      # answering queries
+      num_queries=int(lines[init_num+1])
+      print_q_index=0
+      error_found=False
+      for query in lines[init_num+2:]:
+        query=query.split(',')
+        # all prints only
+        if query[0]=="PRINT":
+          if query[1]=="PIN":
+            ans_s=utils.get_formatted_output(drie.get_companies(query[2]))
+          elif query[1]=="COMPANY":
+            ans_s=utils.get_formatted_output(drie.get_pincodes(query[2]))
+          
+          if(query_ans_list[print_q_index]!=ans_s):
+            print(f"did not match at index:{print_q_index}")
+            print(f"expected: {query_ans_list[print_q_index]}")
+            print(f"got: {ans_s}")
+            error_found=True
+
+          print_q_index+=1
+
+        elif query[0]=="ADD":
+          drie.update_add_company_pincode(query[1],query[2])
         
-    drie=DoubleTrie(init_company_pincode_list)
+        elif query[0]=="REMOVE":
+          drie.update_remove_company_pincode(query[1],query[2])
 
-    query_ans_list=list(filter(lambda x:len(x)!=0,
-                        map(
-                          lambda x:x.strip('\r\n').strip('\n'),
-                          ans_f.readlines()
-                            )
-                        )
-                )
-    # answering queries
-    num_queries=int(lines[init_num+1])
-    print_q_index=0
-    for query in lines[init_num+2:]:
-      query=query.split(',')
-      # all prints only
-      if query[0]=="PRINT":
-        if query[1]=="PIN":
-          ans_s=utils.get_formatted_output(drie.get_companies(query[2]))
-        elif query[1]=="COMPANY":
-          ans_s=utils.get_formatted_output(drie.get_pincodes(query[2]))
-        
-        if(query_ans_list[print_q_index]!=ans_s):
-          print(f"did not match at index:{print_q_index}")
-          print(f"expected: {query_ans_list[print_q_index]}")
-          print(f"got: {ans_s}")
+    if not error_found:
+      print("test ran successfully!")
+    else:
+      print("error(s) found!")
 
-        print_q_index+=1
-
-      elif query[0]=="ADD":
-        drie.update_add_company_pincode(query[1],query[2])
-      
-      elif query[0]=="REMOVE":
-        drie.update_remove_company_pincode(query[1],query[2])
-
-
-
-
-
-  # print(drie.get_pincodes("ABCD"))
-  # print(drie.get_companies('7451'))
-  # print(drie._DoubleTrie__get_node("",Node.PINCODE_NODE,))
-  # print(drie.get_all_subtree_strings(drie.pincode_trie_head))
-  # print(drie.get_all_subtree_strings(drie.company_trie_head))
+  except:
+    print("please provide the right filepath for the testcase file")
+    print("make sure to provide a file which has a corressponding answer_ file [see testcases folder for more details]")
