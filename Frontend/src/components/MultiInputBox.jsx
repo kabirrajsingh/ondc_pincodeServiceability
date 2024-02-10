@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import Button from "./Button";
+import SubHeading from "./SubHeading";
 
 // eslint-disable-next-line react/prop-types
 const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
@@ -52,6 +53,30 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
 
   return (
     <div className="max-w-md p-4 flex flex-wrap items-center">
+      <div className="ml-2 -mt-1">
+        <Button onClick={handleType1QueryClick}>Type-1</Button>
+        <Button onClick={handleType2QueryClick}>Type-2</Button>
+        <Button onClick={handleType3QueryClick}>Type-3</Button>
+        <div className="-ml-3">
+          {inputType == 0 && (
+            <SubHeading
+              label={"Type 1: To query company names using list of pincodes."}
+            />
+          )}
+          {inputType == 1 && (
+            <SubHeading
+              label={"Type 2: To query pincodes using list of companies."}
+            />
+          )}
+          {inputType == 2 && (
+            <SubHeading
+              label={
+                "Type 3: To query if a (company name, pincode) touple is present in the data."
+              }
+            />
+          )}
+        </div>
+      </div>
       {inputs.map((input, index) => (
         <input
           key={index}
@@ -74,17 +99,6 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
       >
         Reset
       </button>
-      <div className="m-2">
-        <Button onClick={handleType1QueryClick}>
-          Type-1 Query(List of Ids)
-        </Button>
-        <Button onClick={handleType2QueryClick}>
-          Type-2 Query(List of Companies)
-        </Button>
-        <Button onClick={handleType3QueryClick}>
-          Type-3 Query(One Id and One Company)
-        </Button>
-      </div>
     </div>
   );
 };
