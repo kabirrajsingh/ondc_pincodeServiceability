@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import Button from "./Button";
 import SubHeading from "./SubHeading";
 
-// eslint-disable-next-line react/prop-types
 const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
   // Function to handle changes in input values
   const handleInputChange = (index, value) => {
@@ -43,9 +43,9 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
       case 0:
         return `Pincode${index + 1}`;
       case 1:
-        return "Company";
+        return "Company Name";
       case 2:
-        return index === 0 ? "Pincode" : "Company";
+        return index === 0 ? "Pincode" : "Company Name";
       default:
         return `Input ${index + 1}`;
     }
@@ -60,18 +60,18 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
         <div className="-ml-3">
           {inputType == 0 && (
             <SubHeading
-              label={"Type 1: To query company names using list of pincodes."}
+              label={"Type 1: To query company names for list of pincodes."}
             />
           )}
           {inputType == 1 && (
             <SubHeading
-              label={"Type 2: To query pincodes using a company name."}
+              label={"Type 2: To query list of pincodes for a company name."}
             />
           )}
           {inputType == 2 && (
             <SubHeading
               label={
-                "Type 3: To query if a (company name, pincode) touple is present in the data."
+                "Type 3: To query if a (company name, pincode) tuple is present in the data."
               }
             />
           )}
