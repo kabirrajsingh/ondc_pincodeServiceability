@@ -29,11 +29,11 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
 
   const handleType2QueryClick = () => {
     setInputType(1);
+    setInputs([""]);
   };
 
   const handleType3QueryClick = () => {
     setInputType(2);
-    // If inputType is 2, reset inputs and show only two input boxes
     setInputs(["", ""]);
   };
 
@@ -41,11 +41,11 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
   const getPlaceholder = (index) => {
     switch (inputType) {
       case 0:
-        return `Id${index + 1}`;
+        return `Pincode${index + 1}`;
       case 1:
-        return `Company${index + 1}`;
+        return "Company";
       case 2:
-        return index === 0 ? "Id" : "Company";
+        return index === 0 ? "Pincode" : "Company";
       default:
         return `Input ${index + 1}`;
     }
@@ -65,7 +65,7 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
           )}
           {inputType == 1 && (
             <SubHeading
-              label={"Type 2: To query pincodes using list of companies."}
+              label={"Type 2: To query pincodes using a company name."}
             />
           )}
           {inputType == 2 && (
@@ -87,8 +87,8 @@ const MultiInputBox = ({ inputs, setInputs, inputType, setInputType }) => {
           className="border rounded px-2 py-1 m-2"
         />
       ))}
-      {/* Show "Add Parameters" button if inputType is not 2 or inputs length is less than 2 */}
-      {(inputType !== 2 || inputs.length < 2) && (
+      {/* Show "Add Parameters" button if inputType is 0 */}
+      {inputType === 0 && (
         <Button onClick={handleAddInput}>
           {inputs.length > 1 ? "Add More Parameters" : "Add Parameter"}
         </Button>

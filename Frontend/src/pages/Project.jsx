@@ -27,8 +27,8 @@ function Project() {
         />
       </Card>
       <Card>
-        <Heading label={"Retrieved Company Name(s)/Id(s)"} />
-        <SubHeading label={"(Click the button to get)"} />
+        <Heading label={"Retrieve Company Name(s)/Pincode(s)"} />
+        <SubHeading label={"Click the button to query data"} />
         <Retrieve inputs={inputs} inputType={inputType} />
       </Card>
     </div>
