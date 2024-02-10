@@ -1,0 +1,25 @@
+name: Release Build
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Package artifacts
+        run: |
+          # Assuming your build creates artifacts in a directory named 'dist'
+          mkdir dist
+          npm run build
+
