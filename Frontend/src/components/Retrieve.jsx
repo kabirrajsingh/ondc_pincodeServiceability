@@ -8,7 +8,6 @@ import Button from "./Button";
 export default function Retrieve({ inputs, inputType }) {
   const [queryResponse, setQueryResponse] = useState("");
 
-  // Function to handle the "Send Query" button click
   const handleSendQuery = async () => {
     try {
       let endpoint =
@@ -18,10 +17,12 @@ export default function Retrieve({ inputs, inputType }) {
       let params = {};
       if (inputType === 0) {
         // For Type 0 query
+        // eslint-disable-next-line react/prop-types
         params["pincodeList"] = inputs.join(",");
       } else if (inputType === 1) {
         // For Type 1 query
-        params["company"] = inputs[0];
+        // eslint-disable-next-line react/prop-types
+        params["company"] = inputs.join(",");
       } else if (inputType === 2) {
         // For Type 2 query
         params["company"] = inputs[1];
@@ -35,7 +36,7 @@ export default function Retrieve({ inputs, inputType }) {
       const { data } = response;
 
       // Update the state variable with the obtained data
-      setQueryResponse(data);
+      setQueryResponse(data.stringfy());
     } catch (error) {
       console.error("Error sending query:", error);
       // Handle error if needed
@@ -44,7 +45,6 @@ export default function Retrieve({ inputs, inputType }) {
 
   return (
     <div className="ml-4">
-      {/* "Send Query" button styled with green background color */}
       <Button
         onClick={handleSendQuery}
         className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
@@ -52,7 +52,6 @@ export default function Retrieve({ inputs, inputType }) {
         Send Query
       </Button>
 
-      {/* Display the query response */}
       <div className="mt-3">{queryResponse}</div>
     </div>
   );
