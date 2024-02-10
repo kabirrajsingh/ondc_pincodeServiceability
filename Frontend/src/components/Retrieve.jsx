@@ -36,7 +36,7 @@ export default function Retrieve({ inputs, inputType }) {
       const { data } = response;
 
       // Update the state variable with the obtained data
-      setQueryResponse(data.stringfy());
+      setQueryResponse(JSON.stringify(data));
     } catch (error) {
       console.error("Error sending query:", error);
       // Handle error if needed
