@@ -23,7 +23,7 @@ The query can be one of the following -
 3. PRINT,PIN,PINCODE- Prints the companies serviceable in the Pincode field. Ex- PRINT,PIN,614599
 4. PRINT,COMPANY,company_name- Prints the pincodes serviceable in the company_name field. Ex- PRINT,COMPANY,DVUGWTNT
 
-So a while input may look like this-
+So a while input may look like this-<br/>
 5<br/>
 PVTPPE,846912<br/>
 PVTPPE,846913<br/>
