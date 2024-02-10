@@ -18,11 +18,11 @@ export default function Retrieve({ inputs, inputType }) {
       if (inputType === 0) {
         // For Type 0 query
         // eslint-disable-next-line react/prop-types
-        params["pincodeList"] = inputs.join(",");
+        params["pincodeList"] = inputs.join(",").replace(/,+$/, "");
       } else if (inputType === 1) {
         // For Type 1 query
         // eslint-disable-next-line react/prop-types
-        params["company"] = inputs.join(",");
+        params["company"] = inputs.join(",").replace(/,+$/, "");
       } else if (inputType === 2) {
         // For Type 2 query
         params["company"] = inputs[1];
