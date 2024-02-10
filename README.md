@@ -23,18 +23,47 @@ The query can be one of the following -
 3. PRINT,PIN,PINCODE- Prints the companies serviceable in the Pincode field. Ex- PRINT,PIN,614599
 4. PRINT,COMPANY,company_name- Prints the pincodes serviceable in the company_name field. Ex- PRINT,COMPANY,DVUGWTNT
 
-So a while input may look like this-<br/>
-5<br/>
-PVTPPE,846912<br/>
-PVTPPE,846913<br/>
-PVTPPE,754013<br/>
-TJTCNCUBI,378258<br/>
-TJTCNCUBI,378259<br/>
-3<br/>
-REMOVE,TJTCNCUBI,378259<br/>
-PRINT,COMPANY,TJTCNCUBI<br/>
-PRINT,PIN,846913<br/>
+So a while input may look like this-
+```
+<number of company pincode inputs>
+.
+.
+.
+company pincode inputs
+.
+.
+.
+<number of queries>
+.
+.
+.
+queries
+.
+.
+.
+```
+For example, see the file below:
+```
+5
+PVTPPE,846912
+PVTPPE,846913
+PVTPPE,754013
+TJTCNCUBI,378258
+TJTCNCUBI,378259
+3
+REMOVE,TJTCNCUBI,378259
+PRINT,COMPANY,TJTCNCUBI
+PRINT,PIN,846913
+```
 
+### Testing Instructions
+In the test_cases folder, there are 2 subfolders. The "Simple without changes" folder contains files with dummy data but no update or print query. The file can be loaded into the Drie and then manual queries can be fired by the user.
+On the other hand, the "WIth update,remove,add etc" folder contains files with both some initial data and update/print queries. They come paired with a corresponding "answer_" prefixed file that contains the results of the queries. In the main section of the drie, a code is written that takes input of the test file and runs the check. 
+
+To run those tests, follow these steps:
+1. git clone the repository and cd to the repo.
+2. run command on shell like: `python Algorithm/main.py "test_cases/WIth update,remove,add etc/sample_input_addremoveupdate.txt"`
+   
 ### Benefits:
   * Decreases space requirement.
   * Enhances fetching speed.
