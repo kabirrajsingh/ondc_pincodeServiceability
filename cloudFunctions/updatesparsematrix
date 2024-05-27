@@ -1,0 +1,74 @@
+import functions_framework
+import os,time
+from dotenv import load_dotenv
+import json
+from drie_redis import DoubleTrie
+from utils import RedisClient
+import redis
+from drie_redis import DoubleTrie
+import traceback
+from flask import jsonify
+
+load_dotenv()
+
+#create the drie object
+
+def establish_conn():
+  redis_client=RedisClient(host="10.196.16.3", port="6379", db=0, decode_responses=True)
+  drieObj=DoubleTrie(redis_client)
+  drieObj.load_from_db()
+
+  return redis_client,drieObj
+
+redis_client,drieObj=establish_conn()
+
+@functions_framework.http
+def handle(request):
+  global redis_client
+  global drieObj
+  if not redis_client or not drieObj:
+    redis_client,drieObj=establish_conn()
+
+  operation_type=request.values.get("operation",None)
+  company=request.values.get("company",None)
+  pincode=request.values.get("pincode",None)
+
+  try:
+    if not company or not pincode or not operation_type:
+      response={
+        "message":"put company, pincode, and operation"
+      }
+      status=400
+    elif operation_type.lower()=="insert":
+      drieObj.update_add_company_pincode(company,pincode)
+      response={
+        "message":True
+      }
+      status=200
+    elif operation_type.lower()=="delete":
+      drieObj.update_remove_company_pincode(company,pincode)
+      response={
+        "message":True
+      }
+      status=200
+    else:
+      response={
+        "message":f"unsupported operation type: {operation_type}"
+      }
+      status=400
+
+    return add_cors_headers(jsonify(response)),status
+  except Exception as exc:
+    response={"message":f"Error occurred: {exc}"}
+    status=400
+    traceback.print_exc()
+
+    return add_cors_headers(jsonify(response)),status
+
+    
+
+def add_cors_headers(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    return response
